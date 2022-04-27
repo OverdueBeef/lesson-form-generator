@@ -1,0 +1,11 @@
+{
+  "form": [
+    {
+      "type": "text",
+      "id": "myText",
+      "multiline": false,
+      "label": "My label",
+      "layout": "half"
+    }
+  ]
+}
