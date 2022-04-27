@@ -2,10 +2,42 @@
   "form": [
     {
       "type": "text",
-      "id": "myText",
+      "id": "nameInput",
       "multiline": false,
-      "label": "My label",
+      "label": "Input Field",
       "layout": "half"
+    },
+    {
+      "type": "text",
+      "id": "emailInput",
+      "multiline": false,
+      "label": "Input Field",
+      "layout": "half"
+    },
+    {
+      "type": "text",
+      "id": "myText",
+      "multiline": true,
+      "label": "Text Area",
+      "layout": "half"
+    },
+    {
+      "type": "radio",
+      "id": "iceCream",
+      "label": "My label",
+      "layout": "full",
+      "options": [
+        {
+          "value": "chocolate",
+          "label": "Chocolate",
+          "default": true
+        },
+        {
+          "value": "vanilla",
+          "label": "Vanilla",
+          "default": false
+        }
+      ]
     }
   ]
 }
