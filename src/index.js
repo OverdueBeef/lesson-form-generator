@@ -4,6 +4,8 @@ import { readFile } from "./helpers";
 const DATA = readFile("../data/input.json");
 console.clear();
 
+// Make sure to submit a PR once your code is done
+
 /*
  *    VALIDATION
  */
