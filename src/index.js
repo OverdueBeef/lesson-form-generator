@@ -4,7 +4,7 @@ import { readFile } from "./helpers";
 const DATA = readFile("../data/input.json");
 console.clear();
 
-// Make sure to submit a PR once your code is done
+// Make sure to submit a PR once your code is done aaaaaaaaa
 
 /*
  *    VALIDATION
@@ -14,12 +14,33 @@ function validateTextField(textField) {
   // textField.multiline must be `true` or `false`
   if (
     textField.multiline &&
-    (textField.multiline !== true || textField.multiline !== false)
+    textField.multiline !== true &&
+    textField.multiline !== false
   ) {
     throw new Error(
       `Attribute 'multiline' must be boolean: found ${textField.multiline}`
     );
   }
+}
+
+function validateRadioField(radioField) {
+  // radios must have 'options' elements that contain 'value' & 'label'
+  const radioOptionContains = ["value", "label"];
+  const radioFieldOptions = radioField.options;
+
+  if (!radioFieldOptions || radioFieldOptions.length === 0) {
+    throw new Error("No 'options' available for radio element.");
+  }
+
+  radioFieldOptions.forEach((radioOption) => {
+    radioOptionContains.forEach((radioFieldIncludes) => {
+      if (!Object.keys(radioOption).includes(radioFieldIncludes)) {
+        throw new Error(
+          `Field '${radioFieldIncludes}' required for radio elements.`
+        );
+      }
+    });
+  });
 }
 
 function validateGlobalData(formField) {
@@ -63,6 +84,9 @@ function validateFormData(data) {
       case "text":
         validateTextField(formField);
         break;
+      case "radio":
+        validateRadioField(formField);
+        break;
       default:
         throw new Error(
           `Field type '${formField.type}' is not a valid form element.`
@@ -76,10 +100,13 @@ function validateFormData(data) {
 /*
  *    GENERATION
  */
-
 function generateTextInputAndLabel(formField) {
-  const textInputElement = document.createElement("input");
-  textInputElement.type = formField.type;
+  const elementToCreate = formField.multiline ? "textarea" : "input";
+  const textInputElement = document.createElement(elementToCreate);
+
+  if (elementToCreate === "input") {
+    textInputElement.type = formField.type;
+  }
   textInputElement.id = formField.id;
 
   const textInputLabelElement = document.createElement("label");
@@ -87,6 +114,22 @@ function generateTextInputAndLabel(formField) {
   textInputLabelElement.innerText = formField.label;
 
   return [textInputElement, textInputLabelElement];
+}
+
+function generateRadioInputAndLabel(formField, optionData) {
+  const radioInputElement = document.createElement("input");
+  const radioIdAndValue = optionData.label;
+
+  radioInputElement.type = formField.type;
+  radioInputElement.id = radioIdAndValue;
+  radioInputElement.name = formField.id;
+  radioInputElement.value = radioIdAndValue;
+
+  const radioInputLabelElement = document.createElement("label");
+  radioInputLabelElement.htmlFor = radioIdAndValue;
+  radioInputLabelElement.innerText = radioIdAndValue;
+
+  return [radioInputElement, radioInputLabelElement];
 }
 
 /*
@@ -107,6 +150,24 @@ function generateForm(formData) {
         const [textElement, label] = generateTextInputAndLabel(fieldData);
         formElement.append(label, textElement);
         break;
+      case "radio":
+        const radioInputLabelElement = document.createElement("label");
+        radioInputLabelElement.htmlFor = `${fieldData.id}Radio`;
+        radioInputLabelElement.innerText = fieldData.label;
+        formElement.append(radioInputLabelElement);
+
+        const divElement = document.createElement("div");
+        divElement.id = `${fieldData.id}Radio`;
+        formElement.append(divElement);
+        fieldData.options.forEach((optionData) => {
+          const [radioElement, radioLabel] = generateRadioInputAndLabel(
+            fieldData,
+            optionData
+          );
+          divElement.append(radioElement, radioLabel);
+        });
+
+        break;
       default:
         break;
     }
@@ -121,4 +182,4 @@ if (isFormValid) {
   generateForm(DATA);
 }
 
-console.log(isFormValid);
+console.log(document.getElementById("app"));
