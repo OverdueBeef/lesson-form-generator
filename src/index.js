@@ -4,7 +4,7 @@ import { readFile } from "./helpers";
 const DATA = readFile("../data/input.json");
 console.clear();
 
-// Make sure to submit a PR once your code is done
+// Make sure to submit a PR once your code is done aaaaaaaaa
 
 /*
  *    VALIDATION
@@ -21,6 +21,26 @@ function validateTextField(textField) {
       `Attribute 'multiline' must be boolean: found ${textField.multiline}`
     );
   }
+}
+
+function validateRadioField(radioField) {
+  // radios must have 'options' elements that contain 'value' & 'label'
+  const radioOptionContains = ["value", "label"];
+  const radioFieldOptions = radioField.options;
+
+  if (!radioFieldOptions || radioFieldOptions.length === 0) {
+    throw new Error("No 'options' available for radio element.");
+  }
+
+  radioFieldOptions.forEach((radioOption) => {
+    radioOptionContains.forEach((radioFieldIncludes) => {
+      if (!Object.keys(radioOption).includes(radioFieldIncludes)) {
+        throw new Error(
+          `Field '${radioFieldIncludes}' required for radio elements.`
+        );
+      }
+    });
+  });
 }
 
 function validateGlobalData(formField) {
@@ -65,6 +85,7 @@ function validateFormData(data) {
         validateTextField(formField);
         break;
       case "radio":
+        validateRadioField(formField);
         break;
       default:
         throw new Error(
@@ -80,31 +101,24 @@ function validateFormData(data) {
  *    GENERATION
  */
 function generateTextInputAndLabel(formField) {
-  if (formField.multiline !== true) {
-    const textInputElement = document.createElement("input");
+  const elementToCreate = formField.multiline ? "textarea" : "input";
+  const textInputElement = document.createElement(elementToCreate);
+
+  if (elementToCreate === "input") {
     textInputElement.type = formField.type;
-    textInputElement.id = formField.id;
-
-    const textInputLabelElement = document.createElement("label");
-    textInputLabelElement.htmlFor = formField.id;
-    textInputLabelElement.innerText = formField.label;
-
-    return [textInputElement, textInputLabelElement];
-  } else {
-    const textInputElement = document.createElement("textarea");
-    textInputElement.id = formField.id;
-
-    const textInputLabelElement = document.createElement("label");
-    textInputLabelElement.htmlFor = formField.id;
-    textInputLabelElement.innerText = formField.label;
-
-    return [textInputElement, textInputLabelElement];
   }
+  textInputElement.id = formField.id;
+
+  const textInputLabelElement = document.createElement("label");
+  textInputLabelElement.htmlFor = formField.id;
+  textInputLabelElement.innerText = formField.label;
+
+  return [textInputElement, textInputLabelElement];
 }
 
-function generateRadioInputAndLabel(formField, x) {
+function generateRadioInputAndLabel(formField, optionData) {
   const radioInputElement = document.createElement("input");
-  const radioIdAndValue = formField.options[x].label;
+  const radioIdAndValue = optionData.label;
 
   radioInputElement.type = formField.type;
   radioInputElement.id = radioIdAndValue;
@@ -141,17 +155,16 @@ function generateForm(formData) {
         radioInputLabelElement.htmlFor = `${fieldData.id}Radio`;
         radioInputLabelElement.innerText = fieldData.label;
         formElement.append(radioInputLabelElement);
+
         const divElement = document.createElement("div");
         divElement.id = `${fieldData.id}Radio`;
         formElement.append(divElement);
-        let x = 0;
         fieldData.options.forEach((optionData) => {
           const [radioElement, radioLabel] = generateRadioInputAndLabel(
             fieldData,
-            x
+            optionData
           );
           divElement.append(radioElement, radioLabel);
-          x++;
         });
 
         break;
