@@ -5,26 +5,62 @@
       "id": "nameInput",
       "multiline": false,
       "label": "Input Field",
-      "layout": "half"
+      "layout": "full"
     },
     {
       "type": "text",
       "id": "emailInput",
       "multiline": false,
       "label": "Input Field",
-      "layout": "half"
+      "layout": "full"
+    },
+    {
+      "type": "dropdown",
+      "id": "myDropdown",
+      "label": "Select Field",
+      "layout": "full",
+      "options": [
+        {
+          "value": "option1",
+          "label": "Option 1"
+        },
+        {
+          "value": "option2",
+          "label": "Option 2"
+        },
+        {
+          "value": "option3",
+          "label": "Option 3"
+        },
+        {
+          "value": "option4",
+          "label": "Option 4"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "myCheckbox",
+      "label": "My label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "myCheckbox2",
+      "label": "My label2",
+      "default": false
     },
     {
       "type": "text",
       "id": "myText",
       "multiline": true,
       "label": "Text Area",
-      "layout": "half"
+      "layout": "full"
     },
     {
       "type": "radio",
       "id": "iceCream",
-      "label": "My label",
+      "label": "Radio fields",
       "layout": "full",
       "options": [
         {
