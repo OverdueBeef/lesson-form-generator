@@ -10,27 +10,20 @@ body {
   justify-content: center;
 }
 
-form {
+#inputForm {
   display: flex;
-  flex-direction: column;
-}
-
-input[type="text"] {
-  color: #bac5cd;
-  border-radius: 2px;
-  width: 280px;
-  height: 40px;
-  border-style: solid;
-  border-block-width: 1px;
-  border-inline-width: 1px;
-  border-color: #dbdbdb;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 286px;
+  border: 2px solid red;
+  padding: 15px;
 }
 
 label {
   color: #a2b1bd;
   font-weight: 600;
   font-size: 14px;
-  margin: 40px 0px 12px 0px;
+  margin: 15px 0px 12px 0px;
 }
 
 textarea {
@@ -39,19 +32,71 @@ textarea {
   border-radius: 2px;
   resize: none;
   border-color: #dbdbdb;
+  margin-bottom: 15px;
 }
 
 input[type="radio"] {
   width: 25px;
   height: 25px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+input[type="text"] {
+  border-radius: 2px;
+  width: 280px;
+  height: 40px;
+  margin-bottom: 15px;
+  border-style: solid;
+  border-block-width: 1px;
+  border-inline-width: 1px;
+  border-color: #dbdbdb;
 }
 
 #iceCreamRadio label {
-  margin: 0px 20px 0px 5px;
+  margin: 20px 20px 10px 5px;
   font-weight: 400;
 }
 
 label[for="iceCreamRadio"] {
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+#myDropdown {
+  border-color: #dbdbdb;
+  margin-bottom: 10px;
+  height: 44px;
+  width: 149px;
+  border-radius: 2px;
+}
+
+div #myCheckboxDiv,
+#myCheckbox2Div {
+  margin-top: 10px;
+  width: 50%;
+}
+
+div #myCheckbox label,
+#myCheckbox2 label {
+  margin: 0px auto;
+  width: 100%;
+}
+
+input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  margin: 0px 10px;
+  margin-bottom: 15px;
+}
+
+#buttonDiv {
+  display: flex;
+  width: 100%;
+  margin: 15px 0px 0px 0px;
+}
+
+#buttonDiv * {
+  margin: 0px auto;
+  width: 45%;
 }
